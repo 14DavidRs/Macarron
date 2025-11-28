@@ -3,6 +3,7 @@ Seguridad en APIs – Conceptos Fundamentales
 Este documento resume tres conceptos clave usados para proteger APIs modernas: Rate-Limit, CORS y JWT. Cada explicación está escrita de forma sencilla, con ejemplos reales donde se aplican.
 
 ## 1. Rate-Limit
+
 ¿Qué es?
 
 El rate-limit es una técnica que controla cuántas solicitudes puede hacer un usuario o una IP a un servidor dentro de un tiempo determinado.
@@ -24,6 +25,7 @@ Con rate-limit, el servidor podría permitir solo 5 intentos cada minuto por IP.
 Así se bloquea automáticamente cualquier comportamiento sospechoso.
 
 ## 2. CORS (Cross-Origin Resource Sharing)
+
 ¿Qué problema resuelve?
 
 Cuando un navegador intenta pedir datos desde un dominio diferente al que está cargando la página (por ejemplo, frontend en http://localhost:5173 y backend en http://localhost:3000), por seguridad el navegador bloquea la petición.
@@ -49,6 +51,7 @@ qué métodos son permitidos,
 si se permiten cookies, etc.
 
 ## 3. JWT (JSON Web Token)
+
 ¿Qué es un token?
 
 Un token es un “pase digital” que representa a un usuario ya autenticado.
@@ -80,7 +83,6 @@ Luego, para acceder a /tasks, el usuario envía el token en el header:
 
 Authorization: Bearer <token>
 
-
 El servidor revisa:
 
 si el token es válido,
@@ -90,3 +92,28 @@ si no está expirado,
 y si pertenece a un usuario real.
 
 Si todo está bien, permite el acceso.
+
+## Cómo implementamos JWT en este proyecto
+
+Para este proyecto utilizamos JWT para manejar la autenticación de los usuarios después del login.
+El flujo implementado es el siguiente:
+
+El usuario envía correo y contraseña a POST /auth/login.
+
+Verificamos que el usuario exista en la base de datos.
+
+Comparamos la contraseña enviada con la que está almacenada usando bcrypt.
+
+Si las credenciales son correctas, generamos un JWT usando jsonwebtoken.
+
+En el payload incluimos:
+
+sub: que representa el ID del usuario autenticado.
+
+En las opciones definimos una expiración (expiresIn: "1h").
+
+El token se firma usando la variable JWT_SECRET definida en el archivo .env.
+
+El frontend deberá enviar este token en cada petición a rutas protegidas (más adelante en el proyecto).
+
+Este mecanismo nos permite tener sesiones sin almacenar información en memoria del servidor, haciendo el sistema más escalable y seguro.
