@@ -117,3 +117,38 @@ El token se firma usando la variable JWT_SECRET definida en el archivo .env.
 El frontend deberá enviar este token en cada petición a rutas protegidas (más adelante en el proyecto).
 
 Este mecanismo nos permite tener sesiones sin almacenar información en memoria del servidor, haciendo el sistema más escalable y seguro.
+
+
+## ¿por qué usar Passport si ya teníamos middleware?
+
+### Por qué mantener el middleware propio
+
+Es más simple y fácil de entender para principiantes.
+
+Se controla manualmente el JWT (más educativo).
+
+### Por qué agregar Passport
+
+Passport:
+
+Estándar industrial para autenticación.
+
+Facilita agregar nuevas estrategias:
+
+Google OAuth
+
+GitHub OAuth
+
+Facebook
+
+Local strategy
+
+Maneja automáticamente:
+
+Validación del token
+
+Manejo de errores
+
+Adjuntar req.user
+
+Hace tu proyecto más escalable y profesional.

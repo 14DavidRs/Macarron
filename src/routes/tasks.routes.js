@@ -10,11 +10,11 @@ import { authMiddleware } from "../middleware/auth.middleware.js";
 const router = Router();
 
 // Todas las rutas de /tasks deben estar protegidas
-router.use("/tasks", authMiddleware);
+const passportAuth = passport.authenticate("jwt", { session: false });
 
-router.get("/tasks", getTasks);
-router.post("/tasks", createTask);
-router.put("/tasks/:id", updateTask);
-router.delete("/tasks/:id", deleteTask);
+router.get("/tasks", passportAuth, getTasks);
+router.post("/tasks", passportAuth, createTask);
+router.put("/tasks/:id", passportAuth, updateTask);
+router.delete("/tasks/:id", passportAuth, deleteTask);
 
 export default router;
