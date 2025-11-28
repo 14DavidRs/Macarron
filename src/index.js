@@ -1,10 +1,12 @@
 import express from "express";
 import tasksRoutes from "./src/routes/tasks.routes.js";
+import authRoutes from "./src/routes/auth.routes.js";
 
 const app = express();
 
 app.use(express.json()); // Para leer JSON
 app.use(tasksRoutes);    // Registrar rutas
+app.use(authRoutes);
 
 app.get("/", (req, res) => {
   res.send("API funcionando con Prisma");
