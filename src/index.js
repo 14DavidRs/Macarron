@@ -1,12 +1,15 @@
-import express from "express"
+import express from "express";
+import tasksRoutes from "./src/routes/tasks.routes.js";
 
-const app = express()
-const PORT = 3000
+const app = express();
+
+app.use(express.json()); // Para leer JSON
+app.use(tasksRoutes);    // Registrar rutas
 
 app.get("/", (req, res) => {
-    res.send("API running")
-})
+  res.send("API funcionando con Prisma");
+});
 
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`)
-})
+app.listen(3000, () => {
+  console.log("Servidor listo en puerto 3000");
+});
